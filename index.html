@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Farzana Rahman Supti</title>
+<meta name="description" content="Farzana Rahman Supti: research on reliable evaluation of medical imaging AI.">
+<style>
+:root{
+  --bg:#fdfdfc; --fg:#1d1f21; --muted:#5f6368; --line:#e3e3e0; --accent:#1155cc; --card:#f6f6f3;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#16181a; --fg:#e8e8e6; --muted:#a0a4a8; --line:#2d3033; --accent:#7aa7f0; --card:#1e2124; }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font:17px/1.6 Georgia,"Times New Roman",serif}
+main{max-width:720px;margin:0 auto;padding:48px 16px 64px}
+h1{font-size:2rem;line-height:1.2;margin:0 0 6px;font-weight:600}
+h2{font:600 .8rem/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted);margin:48px 0 16px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:1.1rem;margin:0 0 6px;line-height:1.35}
+p{margin:0 0 14px}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.tag{color:var(--muted);margin:0 0 14px;font-size:1.05rem}
+.links{font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px}
+.project{margin:0 0 36px}
+.meta{font:14px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--muted);margin:0 0 10px}
+figure{margin:16px 0 12px;background:#fff;border:1px solid var(--line);border-radius:6px;padding:10px}
+figure img,figure svg{display:block;width:100%;height:auto}
+figcaption{font:13px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:#5f6368;margin-top:8px}
+ul.plain{list-style:none;padding:0;margin:0}
+ul.plain li{display:flex;gap:16px;padding:6px 0}
+ul.plain .when{flex:0 0 96px;font:14px/1.7 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--muted)}
+footer{margin-top:56px;font:13px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--muted)}
+@media (max-width:520px){
+  main{padding-top:32px}
+  ul.plain li{flex-direction:column;gap:0}
+  ul.plain .when{flex:none}
+}
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <h1>Farzana Rahman Supti</h1>
+  <p class="tag">I work on medical image analysis, and mostly on one question: do the numbers we report actually hold up?</p>
+  <nav class="links">
+    <a href="assets/Farzana_Rahman_Supti_CV.pdf">CV (PDF)</a>
+    <a href="mailto:farzanasupti@gmail.com">farzanasupti@gmail.com</a>
+    <a href="https://github.com/farzanasupti">GitHub</a>
+    <a href="https://www.linkedin.com/in/farzana-rahman-supti/">LinkedIn</a>
+    <a href="https://www.researchgate.net/profile/Farzana-Supti">ResearchGate</a>
+  </nav>
+</header>
+
+<h2>About</h2>
+<p>I studied Computer Science and Engineering at North South University in Bangladesh, where my undergraduate thesis was on brain tumour segmentation with U-Net and UNETR. Since then I've done a remote research internship at Duke, worked with the Big-Matrix R&amp;D Lab at NSU, and kept running into the same problem: small choices in how data is split and scored can move a result more than the method being tested.</p>
+<p>During the day I'm a software engineer at Ternary Solutions, building LLM systems where every generated message is checked and reviewed by a person before it goes out. That work taught me to care about whether a figure matches its source, and I bring the same habit to research.</p>
+<p>I'm applying for PhD programmes starting in Fall 2027.</p>
+
+<h2>Research</h2>
+
+<article class="project">
+  <h3>Tumour-type conditioning and evaluation protocol in brain-tumour segmentation</h3>
+  <p class="meta">Pre-registered study &middot; with MD Mahi Sarkar and Farhana Rahman Elma &middot; manuscript in preparation &middot; <a href="https://github.com/farzanasupti/Brain-Tumor-Segmentation">code</a></p>
+  <p>I wrote down four hypotheses before training anything, then tested them on 3,064 MRI slices from 233 patients, keeping every patient's slices in a single fold. Giving the U-Net decoder the tumour type didn't help, even when it was given the true type (+0.003 Dice). That rules out bad type predictions as the reason for the null result.</p>
+  <p>The more useful finding was about evaluation. With the same model, folds and data, splitting by slice instead of by patient raised Dice by about 5 points and made the spread between folds three times smaller. I also found that our own region-wise augmentation drew an edge onto the tumour boundary in 62% of training images. That gave the model a shortcut, and Dice dropped by 0.22. I recorded the expected outcome before most of those folds ran.</p>
+  <figure>
+    <img src="assets/split-effect.png" alt="Dot plot of Dice per fold: patient-disjoint folds spread from 0.77 to 0.81, slice-level folds cluster tightly around 0.835, close to a published 0.841." loading="lazy">
+    <figcaption>Same model, same data. Only the split differs. Leaky slice-level folds look better and more stable than they really are.</figcaption>
+  </figure>
+</article>
+
+<article class="project">
+  <h3>Counting photographs, not images: duplicate-aware skin disease classification</h3>
+  <p class="meta">With MD Mahi Sarkar and Farhana Rahman Elma &middot; manuscript in preparation &middot; <a href="https://github.com/farzanasupti/skin-disease-classification">code</a></p>
+  <p>A public five-class skin-condition dataset has 9,548 images. When I checked them, I found they come from just 341 photographs, each saved with 27 augmented copies (crops, padding, colour shifts and flips). A normal image-level split therefore puts a copy of almost every test photo into training.</p>
+  <p>I grouped the copies using flip- and rotation-invariant hashing plus filename matching, then re-ran eight models with grouped five-fold cross-validation, scoring only on original photographs. That made 40 runs, and one tested pipeline produces every table and figure.</p>
+  <figure>
+    <svg viewBox="0 0 640 170" role="img" aria-label="One original photograph becomes 28 images; an image-level split sends some copies to training and some to test.">
+      <style>.t{font:14px system-ui,sans-serif;fill:#1d1f21}.s{font:12px system-ui,sans-serif;fill:#5f6368}</style>
+      <rect x="20" y="55" width="70" height="60" rx="4" fill="#2e7bbf"/>
+      <text class="t" x="55" y="140" text-anchor="middle">1 photo</text>
+      <path d="M100 85 H150" stroke="#888" stroke-width="2" marker-end="url(#a)"/>
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#888"/></marker></defs>
+      <g fill="#2e7bbf" opacity=".75">
+        <rect x="160" y="40" width="22" height="18" rx="2"/><rect x="186" y="40" width="22" height="18" rx="2"/><rect x="212" y="40" width="22" height="18" rx="2"/><rect x="238" y="40" width="22" height="18" rx="2"/><rect x="264" y="40" width="22" height="18" rx="2"/><rect x="290" y="40" width="22" height="18" rx="2"/><rect x="316" y="40" width="22" height="18" rx="2"/>
+        <rect x="160" y="62" width="22" height="18" rx="2"/><rect x="186" y="62" width="22" height="18" rx="2"/><rect x="212" y="62" width="22" height="18" rx="2"/><rect x="238" y="62" width="22" height="18" rx="2"/><rect x="264" y="62" width="22" height="18" rx="2"/><rect x="290" y="62" width="22" height="18" rx="2"/><rect x="316" y="62" width="22" height="18" rx="2"/>
+        <rect x="160" y="84" width="22" height="18" rx="2"/><rect x="186" y="84" width="22" height="18" rx="2"/><rect x="212" y="84" width="22" height="18" rx="2"/><rect x="238" y="84" width="22" height="18" rx="2"/><rect x="264" y="84" width="22" height="18" rx="2"/><rect x="290" y="84" width="22" height="18" rx="2"/><rect x="316" y="84" width="22" height="18" rx="2"/>
+        <rect x="160" y="106" width="22" height="18" rx="2"/><rect x="186" y="106" width="22" height="18" rx="2"/><rect x="212" y="106" width="22" height="18" rx="2"/><rect x="238" y="106" width="22" height="18" rx="2"/><rect x="264" y="106" width="22" height="18" rx="2"/><rect x="290" y="106" width="22" height="18" rx="2"/><rect x="316" y="106" width="22" height="18" rx="2"/>
+      </g>
+      <text class="t" x="249" y="148" text-anchor="middle">28 images (original + 27 copies)</text>
+      <path d="M350 70 L420 50" stroke="#888" stroke-width="2" marker-end="url(#a)"/>
+      <path d="M350 100 L420 120" stroke="#888" stroke-width="2" marker-end="url(#a)"/>
+      <rect x="430" y="30" width="190" height="40" rx="4" fill="none" stroke="#2e7bbf" stroke-width="2"/>
+      <text class="t" x="525" y="55" text-anchor="middle">train</text>
+      <rect x="430" y="100" width="190" height="40" rx="4" fill="none" stroke="#e8590c" stroke-width="2"/>
+      <text class="t" x="525" y="125" text-anchor="middle">test</text>
+      <text class="s" x="525" y="162" text-anchor="middle">same photo in train and test</text>
+    </svg>
+    <figcaption>9,548 images, but only 341 independent photographs. Splitting by image tests the model on photos it has already seen.</figcaption>
+  </figure>
+</article>
+
+<article class="project">
+  <h3>Bilingual brain-MRI visual question answering benchmark</h3>
+  <p class="meta">Early stage &middot; with a collaborator</p>
+  <p>An English, Bangla and code-mixed (Banglish) benchmark where every answer (tumour type, location, size) comes directly from expert masks and labels, not from a language model, so each answer can be checked. It will use patient-disjoint splits, question-only baselines and confidence intervals from the start.</p>
+</article>
+
+<h2>Experience</h2>
+<ul class="plain">
+  <li><span class="when">2026&ndash;now</span><span>Research collaborator, Big-Matrix R&amp;D Lab, North South University</span></li>
+  <li><span class="when">2025&ndash;now</span><span>Software engineer, Ternary Solutions: LLM systems with grounding checks, human review and audit trails</span></li>
+  <li><span class="when">2025</span><span>Remote research intern, Kamaleswaran Lab, Duke University: MRI and retinal fundus imaging</span></li>
+  <li><span class="when">2024&ndash;25</span><span>Research assistant, Civil and Environmental Engineering, NSU: river erosion from satellite imagery</span></li>
+  <li><span class="when">2020&ndash;24</span><span>B.Sc. in Computer Science and Engineering, North South University</span></li>
+</ul>
+
+<h2>News</h2>
+<ul class="plain">
+  <li><span class="when">Nov 2026</span><span>Started the bilingual medical VQA benchmark.</span></li>
+  <li><span class="when">Nov 2026</span><span>Finished three of the four pre-registered brain-segmentation hypotheses.</span></li>
+  <li><span class="when">Sep 2026</span><span>Joined the Big-Matrix R&amp;D Lab at NSU.</span></li>
+</ul>
+
+<footer>Last updated November 2026.</footer>
+</main>
+</body>
+</html>
